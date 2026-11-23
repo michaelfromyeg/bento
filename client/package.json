@@ -1,21 +1,27 @@
 {
     "name": "bento",
-    "version": "1.2.0",
+    "version": "2.0.0",
+    "private": true,
     "description": "Hackable start page inspired by the Bento box",
     "author": "Miguel Ávila; Michael DeMarco <michaelfromyeg@gmail.com>",
     "homepage": "https://bento.michaeldemar.co",
     "license": "GPL-3.0",
-    "devDependencies": {
-        "eslint": "^8.5.0",
-        "gh-pages": "^3.2.3",
-        "prettier": "^2.5.1"
+    "type": "module",
+    "engines": {
+        "node": ">=22.13"
     },
     "scripts": {
         "start": "bash start.sh",
-        "dev": "echo \"Use `npm start`!\" && npm start",
-        "lint": "eslint . --fix",
+        "lint": "eslint .",
         "format": "prettier . --write",
-        "build": "bash build.sh",
-        "deploy": "npm run build && gh-pages -d dist"
+        "format:check": "prettier . --check",
+        "test": "node --test",
+        "build": "bash build.sh"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.15.0",
+        "globals": "^17.14.0",
+        "prettier": "^3.10.1"
     }
 }

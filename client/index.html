@@ -1,61 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>~/</title>
-        <link
-            rel=" shortcut icon"
-            type="image/png"
-            href="assets/icons/favicon.png"
-        />
+        <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+
+        <!-- Apply the saved theme before first paint to avoid a flash. -->
+        <script>
+            try {
+                if (localStorage.getItem("darkTheme") === "enabled") {
+                    document.documentElement.classList.add("darktheme");
+                }
+            } catch {}
+        </script>
 
         <link rel="stylesheet" href="app.css" />
 
-        <!-- Import Open Sans via Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap"
             rel="stylesheet"
         />
 
-        <script src="https://unpkg.com/lucide@latest"></script>
+        <script
+            defer
+            src="https://unpkg.com/lucide@1.69.0/dist/umd/lucide.min.js"
+        ></script>
+        <script type="module" src="assets/js/main.js"></script>
     </head>
 
-    <body class="">
-        <!-- This is a hack; see https://stackoverflow.com/questions/21147149/flash-of-unstyled-content-fouc-in-firefox-only-is-ff-slow-renderer -->
-        <script>
-            let FF_FOUC_FIX;
-        </script>
-
-        <button id="themeButton">
-            <i id="themeIcon" icon-name="moon"></i>
-        </button>
+    <body>
+        <button id="themeButton" aria-label="Toggle dark theme"></button>
 
         <div class="container">
             <div class="timeBlock">
                 <div class="clock">
-                    <div id="hour" class=""></div>
-                    <div id="separator" class=""></div>
-                    <div id="minutes" class=""></div>
+                    <div id="hour"></div>
+                    <div id="separator">:</div>
+                    <div id="minutes"></div>
                 </div>
-                <div id="greetings" class=""></div>
+                <div id="greetings"></div>
             </div>
 
             <div class="weatherBlock">
                 <div class="date">
-                    <div id="month" class=""></div>
-                    <div id="day" class=""></div>
+                    <div id="month"></div>
+                    <div id="day"></div>
                 </div>
                 <div class="weather">
                     <div class="weatherIcon">
-                        <img src="assets/icons/Nord/unknown.png" />
+                        <img src="assets/icons/Nord/unknown.png" alt="" />
                     </div>
                     <div class="weatherValue">
-                        <p class="">- °<span class="g">c</span></p>
+                        <p>-°<span>c</span></p>
                     </div>
                     <div class="weatherDescription">
-                        <p class=""></p>
+                        <p></p>
                     </div>
                 </div>
             </div>
@@ -64,19 +66,5 @@
             <div class="card list list__1" id="list_1"></div>
             <div class="card list list__2" id="list_2"></div>
         </div>
-
-        <!-- Scripts  -->
-        <script src="assets/js/config.js"></script>
-        <script src="assets/js/weather.js"></script>
-
-        <script src="assets/js/time.js"></script>
-        <script src="assets/js/theme.js"></script>
-        <script src="assets/js/greeting.js"></script>
-
-        <script src="assets/js/cards.js"></script>
-        <script src="assets/js/lists.js"></script>
-        <script>
-            lucide.createIcons();
-        </script>
     </body>
 </html>

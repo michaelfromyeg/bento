@@ -14,16 +14,17 @@ Code-related notes.
 
 ### Client
 
-The frontend is basic HTML, CSS, and JavaScript derived from the original project. Frankly, it's not the prettiest, but it works. A lot of this code I've tried to leave untouched besides `assets/js/config.js`.
+The site is plain HTML, CSS, and JavaScript (ES modules, no bundler) derived from the original project. Personal settings live in `client/assets/js/config.js`.
 
-To run it locally, use `start.sh`. There's also `build.sh` for appropriately moving the files to the `dist/` directory.
+Weather comes from [Open-Meteo](https://open-meteo.com) directly in the browser; it needs no API key, so there's no backend.
 
-### Server
+From `client/`:
 
-This is a tiny Fastify server to return weather data courtesy of [Open Weather Map](https://home.openweathermap.org). It's a good example of a tiny API, and it's effective at its (minimal) job.
-
-To run the project locally, run `source .env && npm start`. You can test the weather endpoint with `sh test/weather.sh`. It _should_ be deployed, ~~though it needs to be migrated off Heroku~~, and it is! It's live via Railway.
+- `npm start` serves the site at <http://localhost:8000>
+- `npm test` runs the unit tests
+- `npm run lint` and `npm run format` lint and format
+- `npm run build` copies the site into `dist/`
 
 ### Deployment
 
-There's a GitHub Action for ~~both~~ the front-end ~~and back-end~~.
+The GitHub Action lints, tests, and builds on every PR, and on pushes to `main` publishes `client/dist` to the `gh-pages` branch, which GitHub Pages serves at <https://bento.michaeldemar.co>.

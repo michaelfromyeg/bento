@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Copy files to dist/ for deployment.
+# Copy the site into dist/ for deployment. Usage: `bash build.sh`
 
-# Usage: `bash build.sh`
+set -euo pipefail
 
+rm -rf dist
 mkdir -p dist
 
-echo "https://bento.michaeldemar.co" > dist/CNAME
+echo "bento.michaeldemar.co" > dist/CNAME
 
 cp -r assets dist
-cp app.css dist
-cp index.html dist
+cp app.css index.html dist
 
 echo "Build complete!"
