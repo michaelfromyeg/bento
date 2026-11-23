@@ -1,48 +1,30 @@
-let darkTheme = localStorage.getItem("darkTheme");
-const themeToggle = document.querySelector("#themeButton");
-// const bodyBackground = document.getElementById("#body");
+// The saved theme is applied by an inline script in <head> so the page never
+// flashes the wrong theme; this module only handles toggling it.
 
-const enableDark = () => {
-    document.body.classList.add("darktheme");
-    localStorage.setItem("darkTheme", "enabled");
-    themeToggle.innerHTML = `<i id="themeButton__icon" icon-name="sun"></i>`;
-    lucide.createIcons();
+const STORAGE_KEY = "darkTheme";
+
+const setThemeIcon = (button, isDark) => {
+    button.innerHTML = `<i data-lucide="${isDark ? "sun" : "moon"}"></i>`;
+    lucide.createIcons({ root: button });
 };
 
-const disableDark = () => {
-    document.body.classList.remove("darktheme");
-    localStorage.setItem("darkTheme", null);
-    themeToggle.innerHTML = `<i id="themeButton__icon" icon-name="moon"></i>`;
-    lucide.createIcons();
+export const setUpThemeToggle = () => {
+    const root = document.documentElement;
+    const button = document.getElementById("themeButton");
+    setThemeIcon(button, root.classList.contains("darktheme"));
+
+    button.addEventListener("click", () => {
+        const isDark = root.classList.toggle("darktheme");
+        try {
+            if (isDark) {
+                localStorage.setItem(STORAGE_KEY, "enabled");
+            } else {
+                localStorage.removeItem(STORAGE_KEY);
+            }
+        } catch {
+            // Storage can be unavailable (e.g. private browsing); the toggle
+            // still works for this visit.
+        }
+        setThemeIcon(button, isDark);
+    });
 };
-
-if (darkTheme === "enabled") {
-    document.body.offsetHeight;
-    document.body.classList.add("no-transition");
-
-    enableDark();
-
-    document.body.offsetHeight;
-    document.body.classList.remove("no-transition");
-} else {
-    disableDark();
-}
-
-themeToggle.addEventListener("click", () => {
-    document.body.offsetHeight;
-    document.body.classList.add("no-transition");
-
-    darkTheme = localStorage.getItem("darkTheme");
-    if (darkTheme !== "enabled") {
-        enableDark();
-    } else {
-        disableDark();
-    }
-
-    document.body.offsetHeight;
-    document.body.classList.remove("no-transition");
-});
-
-if (CONFIG.imageBackground) {
-    document.body.classList.add("withImageBackground");
-}

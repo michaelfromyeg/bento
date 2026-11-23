@@ -1,43 +1,37 @@
-const displayClock = () => {
-    const monthNames = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-    ];
+const MONTHS = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+];
 
-    // Get clock elements
-    const d = new Date();
-    const mm = monthNames[d.getMonth()];
-    const dd = d.getDate();
-    const min = (mins = ("0" + d.getMinutes()).slice(-2));
-    let hh = d.getHours();
-    let ampm = "";
-
-    // Hour format
-    if (CONFIG.twelveHourFormat) {
-        ampm = hh >= 12 ? " pm" : " am";
-        hh = hh % 12;
-        hh = hh ? hh : 12;
+export const formatClock = (date, twelveHourFormat) => {
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const hours = date.getHours();
+    if (!twelveHourFormat) {
+        return { hours: String(hours), minutes };
     }
-
-    // Display clock elements
-    document.getElementById("hour").innerText = hh;
-    document.getElementById("separator").innerHTML = " : ";
-    document.getElementById("minutes").innerText = min + ampm;
-
-    document.getElementById("month").innerText = mm;
-    document.getElementById("day").innerText = dd;
-
-    setTimeout(displayClock, 1000);
+    const suffix = hours >= 12 ? " pm" : " am";
+    return { hours: String(hours % 12 || 12), minutes: minutes + suffix };
 };
 
-window.onload = displayClock();
+export const startClock = (config) => {
+    const tick = () => {
+        const now = new Date();
+        const { hours, minutes } = formatClock(now, config.twelveHourFormat);
+        document.getElementById("hour").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("month").textContent = MONTHS[now.getMonth()];
+        document.getElementById("day").textContent = now.getDate();
+    };
+    tick();
+    setInterval(tick, 1000);
+};
